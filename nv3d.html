@@ -1,0 +1,136 @@
+<html>
+  <meta charset="utf-8"/>
+
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.css">
+
+  <style>
+    #chart svg {
+    height: 400px;
+    }
+  </style>
+
+  <div id="chart">
+    <svg></svg>
+  </div>
+
+  <script>
+    function data() {
+        var weights = [
+          {x: 0,  y: 60},
+          {x: 1,  y: 60},
+          {x: 2,  y: 60},
+          {x: 3,  y: 60},
+          {x: 4,  y: 62},
+          {x: 5,  y: 64},
+          {x: 6,  y: 64},
+          {x: 7,  y: 64},
+          {x: 8,  y: 64},
+          {x: 9,  y: 66},
+          {x: 10, y: 66},
+          {x: 11, y: 66},
+          {x: 12, y: 66},
+          {x: 13, y: 66},
+          {x: 14, y: 66},
+          {x: 15, y: 68},
+          {x: 16, y: 68},
+        ]
+
+        var times = [
+          {x: 0,  y: 70,},
+          {x: 1,  y: 85,},
+          {x: 2,  y: 85,},
+          {x: 3,  y: 95,},
+          {x: 4,  y: 90,},
+          {x: 5,  y: 85,},
+          {x: 6,  y: 90,},
+          {x: 7,  y: 90,},
+          {x: 8,  y: 90,},
+          {x: 9,  y: 60,},
+          {x: 10, y: 90,},
+          {x: 11, y: 80,},
+          {x: 12, y: 85,},
+          {x: 13, y: 75,},
+          {x: 14, y: 90,},
+          {x: 15, y: 70,},
+          {x: 16, y: 70,},
+        ]
+
+        function randomDataSeries(n) {
+          var data = [];
+          for (var i = 0; i < 150; i++) {
+            var entry = {x:i, y: Math.random()};
+            data.push(entry);
+          }
+          return data;
+        }
+
+        return [
+          // {
+          //   values: randomDataSeries(100),
+          //   key: "A1"
+          // },
+          // {
+          //   values: randomDataSeries(100),
+          //   key: "B2"
+          // },
+          // {
+          //   values: randomDataSeries(100),
+          //   key: "C3"
+          // },
+          // {
+          //   values: randomDataSeries(100),
+          //   key: "A4"
+          // },
+          // {
+          //   values: randomDataSeries(100),
+          //   key: "B5"
+          // },
+          // {
+          //   values: randomDataSeries(100),
+          //   key: "C6"
+          // },
+
+          {
+            values: weights,
+            key: 'A3 Weight',
+            color: '#ff7f0e'
+          },
+          {
+            values: times,
+            key: 'A3 Time',
+            color: '#2ca02c'
+          },
+        ];
+      }
+
+    nv.addGraph(function() {
+      // var chart = nv.models.lineChart()
+      var chart = nv.models.lineWithFocusChart()
+      .useInteractiveGuideline(true)
+      ;
+
+      chart.xAxis
+      .axisLabel('Training Sessions')
+      .tickFormat(d3.format(',r'))
+      ;
+
+      chart.yAxis
+      .axisLabel('A3 Weight')
+      .tickFormat(d3.format(',r'))
+      ;
+
+      d3.select('#chart svg')
+      .datum(data())
+      .transition().duration(500)
+      .call(chart)
+      ;
+
+      nv.utils.windowResize(chart.update);
+
+      return chart;
+    });
+  </script>
+
+</html>
